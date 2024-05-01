@@ -26,6 +26,6 @@ def download(config_downloader: DataDownloaderConfig) -> None:
             )
             logging.info(f"downloaded file: {file_url}")
         except:
-            logging.info(f"file url not found: {url}")
+            logging.info(f"file url not found: {file_url}")
 
     return

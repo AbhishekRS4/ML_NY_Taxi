@@ -11,7 +11,12 @@ from ny_taxi.dataset.data_loader import data_loader
 from ny_taxi.dataset.data_transformer import transform
 from ny_taxi.config.config import PipelineConfig, FeatureTargetConfig, DataLoaderConfig
 
-def train_pipeline(config_train_loader: DataLoaderConfig, config_test_loader: DataLoaderConfig, config_pipeline: PipelineConfig) -> None:
+
+def train_pipeline(
+    config_train_loader: DataLoaderConfig,
+    config_test_loader: DataLoaderConfig,
+    config_pipeline: PipelineConfig,
+) -> None:
     config_feature_target = FeatureTargetConfig()
     categorical = config_feature_target.categorical
     numerical = config_feature_target.numerical

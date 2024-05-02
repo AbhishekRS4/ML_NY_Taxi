@@ -27,9 +27,9 @@ class FeatureTargetConfig:
     categorical: List[str] = field(
         default_factory=lambda: [
             "PU_DO",
-            #"VendorID",
-            #"payment_type",
-            #"trip_type",
+            # "VendorID",
+            # "payment_type",
+            # "trip_type",
         ]
     )
     numerical: List[str] = field(default_factory=lambda: ["trip_distance"])
@@ -38,6 +38,4 @@ class FeatureTargetConfig:
 
 @dataclass(frozen=True)
 class PipelineConfig:
-    regressor_type: str = field(
-        default="linear"
-    )  # ["linear", "ridge"]
+    regressor_type: str = field(default="linear")  # ["linear", "ridge"]

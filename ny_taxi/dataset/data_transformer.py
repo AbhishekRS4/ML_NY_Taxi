@@ -20,7 +20,11 @@ def transform(df_ny_taxi: pd.DataFrame) -> pd.DataFrame:
     # replace unknown trip type with 1000 to indicate unknown class
     df_ny_taxi["trip_type"] = df_ny_taxi["trip_type"].replace(np.NaN, 1000)
 
-    df_ny_taxi["PU_DO"] = df_ny_taxi["PULocationID"].astype(str) + "_" + df_ny_taxi["DOLocationID"].astype(str)
+    df_ny_taxi["PU_DO"] = (
+        df_ny_taxi["PULocationID"].astype(str)
+        + "_"
+        + df_ny_taxi["DOLocationID"].astype(str)
+    )
 
     config_feature_target = FeatureTargetConfig()
     categorical = config_feature_target.categorical

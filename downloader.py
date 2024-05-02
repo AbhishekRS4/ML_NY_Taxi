@@ -2,7 +2,7 @@ import os
 import argparse
 
 from ny_taxi.data_downloader.download import download
-from ny_taxi.config.data_downloader import DataDownloaderConfig
+from ny_taxi.config.config import DataDownloaderConfig
 
 
 def main() -> None:

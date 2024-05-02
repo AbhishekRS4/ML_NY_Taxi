@@ -3,7 +3,7 @@ import urllib.request
 import logging
 import numpy as np
 
-from ny_taxi.config.data_downloader import DataDownloaderConfig
+from ny_taxi.config.config import DataDownloaderConfig
 
 
 def download(config_downloader: DataDownloaderConfig) -> None:

@@ -36,6 +36,7 @@ def train_pipeline(config_train_loader: DataLoaderConfig, config_test_loader: Da
     logging.info(f"num trips in test set: {df_test.shape[0]}")
 
     # setup model pipeline
+    logging.info(f"config model pipeline: {config_pipeline}")
     pipeline, pipeline_params = get_pipeline(config_pipeline)
 
     # setup grid search with k-fold cross validation
@@ -43,7 +44,7 @@ def train_pipeline(config_train_loader: DataLoaderConfig, config_test_loader: Da
     grid_cv = GridSearchCV(
         pipeline,
         pipeline_params,
-        scoring="neg_mean_squared_error",
+        scoring="neg_root_mean_squared_error",
         cv=k_fold_cv,
     )
 
@@ -52,22 +53,22 @@ def train_pipeline(config_train_loader: DataLoaderConfig, config_test_loader: Da
 
     # get the cross validation score and the params for the best estimator
     cv_best_estimator = grid_cv.best_estimator_
-    cv_best_mse = grid_cv.best_score_
+    cv_best_rmse = grid_cv.best_score_
     cv_best_params = grid_cv.best_params_
 
     logging.info(f"best estimator: {cv_best_estimator}")
-    logging.info(f"best estimator score: {cv_best_mse}")
+    logging.info(f"best estimator score: {cv_best_rmse}")
 
     # compute predictions for train and test sets with the best estimator
     Y_train_pred = cv_best_estimator.predict(X_train_dicts)
     Y_test_pred = cv_best_estimator.predict(X_test_dicts)
 
     # compute metrics for the train and test sets with the best estimator
-    train_mse, train_r2 = compute_metrics(Y_train, Y_train_pred)
-    test_mse, test_r2 = compute_metrics(Y_test, Y_test_pred)
+    train_rmse, train_r2 = compute_metrics(Y_train, Y_train_pred)
+    test_rmse, test_r2 = compute_metrics(Y_test, Y_test_pred)
 
-    logging.info(f"train_mse: {train_mse:.4f}, train_r2: {train_r2:.4f}")
-    logging.info(f"test_mse: {test_mse:.4f}, test_r2: {train_r2:.4f}")
+    logging.info(f"train_rmse: {train_rmse:.4f}, train_r2: {train_r2:.4f}")
+    logging.info(f"test_rmse: {test_rmse:.4f}, test_r2: {train_r2:.4f}")
 
     # use mlflow and log models, params and metrics
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -83,10 +84,10 @@ def train_pipeline(config_train_loader: DataLoaderConfig, config_test_loader: Da
         mlflow.log_params(cv_best_params)
         mlflow.log_param("train_data", config_train_loader.all_files)
         mlflow.log_param("test_data", config_test_loader.all_files)
-        mlflow.log_metric("cv_mse", cv_best_mse)
-        mlflow.log_metric("train_mse", train_mse)
+        mlflow.log_metric("cv_best_rmse", cv_best_rmse)
+        mlflow.log_metric("train_rmse", train_rmse)
         mlflow.log_metric("train_r2", train_r2)
-        mlflow.log_metric("test_mse", test_mse)
+        mlflow.log_metric("test_rmse", test_rmse)
         mlflow.log_metric("test_r2", test_r2)
     # end mlflow logging
     mlflow.end_run()

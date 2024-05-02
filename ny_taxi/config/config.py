@@ -13,26 +13,26 @@ class DataDownloaderConfig:
     year: int = field(default=2021)
 
 
-@dataclass(frozen=True)
+@dataclass()
 class DataLoaderConfig:
     dir_dataset: str
     taxi_type: str = field(default="green")  # ["green", "yellow", "fhv", "fhvhv"]
     year: int = field(default=2021)
     month: int = field(default=0)
+    all_files: str = field(default="")
 
 
 @dataclass(frozen=True)
 class FeatureTargetConfig:
     categorical: List[str] = field(
-        default_factory=[
-            "PULocationID",
-            "DOLocationID",
-            "VendorID",
-            "payment_type",
-            "trip_type",
+        default_factory=lambda: [
+            "PU_DO",
+            #"VendorID",
+            #"payment_type",
+            #"trip_type",
         ]
     )
-    numerical: List[str] = field(default_factory=["trip_distance"])
+    numerical: List[str] = field(default_factory=lambda: ["trip_distance"])
     target: str = field(default="duration")
 
 
@@ -40,4 +40,4 @@ class FeatureTargetConfig:
 class PipelineConfig:
     regressor_type: str = field(
         default="linear"
-    )  # ["linear", "ridge", "ransac", "light_gbm", "random_forest"]
+    )  # ["linear", "ridge"]

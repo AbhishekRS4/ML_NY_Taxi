@@ -10,6 +10,7 @@ def transform(df_ny_taxi: pd.DataFrame) -> pd.DataFrame:
     df_ny_taxi["duration"] = (
         df_ny_taxi.lpep_dropoff_datetime - df_ny_taxi.lpep_pickup_datetime
     )
+
     # convert to mins
     df_ny_taxi.duration = df_ny_taxi.duration.apply(lambda td: td.total_seconds() / 60)
     # choose data that is appropriate
@@ -19,15 +20,9 @@ def transform(df_ny_taxi: pd.DataFrame) -> pd.DataFrame:
     # replace unknown trip type with 1000 to indicate unknown class
     df_ny_taxi["trip_type"] = df_ny_taxi["trip_type"].replace(np.NaN, 1000)
 
-    feature_target_config = FeatureTargetConfig()
+    df_ny_taxi["PU_DO"] = df_ny_taxi["PULocationID"].astype(str) + "_" + df_ny_taxi["DOLocationID"].astype(str)
 
-    # list of categorical features
-    categorical = feature_target_config.categorical
-
-    # list of numerical features
-    numerical = feature_target_config.numerical
-
-    # convert categorical features to strings
-    df_ny_taxi[categorical] = df_ny_taxi[categorical].astype(str)
-
+    config_feature_target = FeatureTargetConfig()
+    categorical = config_feature_target.categorical
+    df_ny_taxi[categorical] = df_ny_taxi[categorical].astype(np.int32).astype(str)
     return df_ny_taxi

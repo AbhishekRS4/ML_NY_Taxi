@@ -38,4 +38,4 @@ class FeatureTargetConfig:
 
 @dataclass(frozen=True)
 class PipelineConfig:
-    regressor_type: str = field(default="linear")  # ["linear", "ridge"]
+    regressor_type: str = field(default="linear")  # ["linear", "ridge", "xgboost"]

@@ -80,7 +80,7 @@ def main() -> None:
         "--regressor_type",
         default=regressor_type,
         type=str,
-        choices=["linear", "ridge"],
+        choices=["linear", "ridge", "xgboost"],
         help="type of the regressor model to be used for the model pipeline",
     )
     ARGS, unparsed = parser.parse_known_args()

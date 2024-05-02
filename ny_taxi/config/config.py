@@ -23,11 +23,21 @@ class DataLoaderConfig:
 
 @dataclass(frozen=True)
 class FeatureTargetConfig:
-    categorical: List[str] = field(default_factory=["PULocationID", "DOLocationID", "VendorID", "payment_type", "trip_type"])
+    categorical: List[str] = field(
+        default_factory=[
+            "PULocationID",
+            "DOLocationID",
+            "VendorID",
+            "payment_type",
+            "trip_type",
+        ]
+    )
     numerical: List[str] = field(default_factory=["trip_distance"])
     target: str = field(default="duration")
 
 
 @dataclass(frozen=True)
 class PipelineConfig:
-    regressor_type: str = field(default="linear") # ["linear", "ridge", "ransac", "light_gbm", "random_forest"]
+    regressor_type: str = field(
+        default="linear"
+    )  # ["linear", "ridge", "ransac", "light_gbm", "random_forest"]

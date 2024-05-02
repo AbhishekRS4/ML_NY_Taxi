@@ -73,10 +73,10 @@ def train_pipeline(
     test_rmse, test_r2 = compute_metrics(Y_test, Y_test_pred)
 
     logging.info(f"train_rmse: {train_rmse:.4f}, train_r2: {train_r2:.4f}")
-    logging.info(f"test_rmse: {test_rmse:.4f}, test_r2: {train_r2:.4f}")
+    logging.info(f"test_rmse: {test_rmse:.4f}, test_r2: {test_r2:.4f}")
 
     # use mlflow and log models, params and metrics
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    mlflow.set_tracking_uri("sqlite:///mlruns.db")
     mlflow.set_experiment("ny_taxi")
 
     experiment = mlflow.get_experiment_by_name("ny_taxi")

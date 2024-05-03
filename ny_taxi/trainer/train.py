@@ -86,6 +86,7 @@ def train_pipeline(
     with mlflow.start_run(experiment_id=experiment.experiment_id):
         mlflow.set_tag("developer", "abhishek_r_s")
         mlflow.sklearn.log_model(cv_best_estimator, model_log_str)
+        mlflow.log_param("regressor", config_pipeline.regressor_type)
         mlflow.log_params(cv_best_params)
         mlflow.log_param("train_data", config_train_loader.all_files)
         mlflow.log_param("test_data", config_test_loader.all_files)

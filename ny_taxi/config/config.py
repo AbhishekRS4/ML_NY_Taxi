@@ -39,3 +39,15 @@ class FeatureTargetConfig:
 @dataclass(frozen=True)
 class PipelineConfig:
     regressor_type: str = field(default="linear")  # ["linear", "ridge", "xgboost"]
+
+
+@dataclass(frozen=True)
+class ProductionConfig:
+    mlflow_tracking_uri: str = field(default="sqlite:///mlruns.db")
+    experiment_name: str = field(default="ny_taxi")
+
+
+@dataclass(frozen=True)
+class TrainerConfig:
+    mlflow_tracking_uri: str = field(default="sqlite:///mlruns.db")
+    experiment_name: str = field(default="ny_taxi")

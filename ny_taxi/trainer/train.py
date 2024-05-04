@@ -9,13 +9,19 @@ from ny_taxi.utils.metrics import compute_metrics
 from ny_taxi.modeling.pipeline import get_pipeline
 from ny_taxi.dataset.data_loader import data_loader
 from ny_taxi.dataset.data_transformer import transform
-from ny_taxi.config.config import PipelineConfig, FeatureTargetConfig, DataLoaderConfig
+from ny_taxi.config.config import (
+    PipelineConfig,
+    FeatureTargetConfig,
+    DataLoaderConfig,
+    TrainerConfig,
+)
 
 
 def train_pipeline(
     config_train_loader: DataLoaderConfig,
     config_test_loader: DataLoaderConfig,
     config_pipeline: PipelineConfig,
+    config_trainer: TrainerConfig,
 ) -> None:
     config_feature_target = FeatureTargetConfig()
     categorical = config_feature_target.categorical
@@ -76,10 +82,10 @@ def train_pipeline(
     logging.info(f"test_rmse: {test_rmse:.4f}, test_r2: {test_r2:.4f}")
 
     # use mlflow and log models, params and metrics
-    mlflow.set_tracking_uri("sqlite:///mlruns.db")
-    mlflow.set_experiment("ny_taxi")
+    mlflow.set_tracking_uri(config_trainer.mlflow_tracking_uri)
+    mlflow.set_experiment(config_trainer.experiment_name)
 
-    experiment = mlflow.get_experiment_by_name("ny_taxi")
+    experiment = mlflow.get_experiment_by_name(config_trainer.experiment_name)
 
     logging.info(f"started mlflow logging for the best estimator")
     model_log_str = config_pipeline.regressor_type

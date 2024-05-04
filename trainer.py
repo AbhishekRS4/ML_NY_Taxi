@@ -5,7 +5,7 @@ import numpy as np
 
 
 from ny_taxi.trainer.train import train_pipeline
-from ny_taxi.config.config import DataLoaderConfig, PipelineConfig
+from ny_taxi.config.config import DataLoaderConfig, PipelineConfig, TrainerConfig
 
 
 def trainer(ARGS: argparse.Namespace) -> None:
@@ -30,8 +30,16 @@ def trainer(ARGS: argparse.Namespace) -> None:
     # set pipeline config
     config_pipeline = PipelineConfig(regressor_type=ARGS.regressor_type)
 
+    # set trainer config
+    config_trainer = TrainerConfig(
+        mlflow_tracking_uri=ARGS.mlflow_tracking_uri,
+        experiment_name=ARGS.experiment_name,
+    )
+
     # train the model pipeline
-    train_pipeline(config_train_loader, config_test_loader, config_pipeline)
+    train_pipeline(
+        config_train_loader, config_test_loader, config_pipeline, config_trainer
+    )
     return
 
 
@@ -42,6 +50,8 @@ def main() -> None:
     taxi_type = "green"
     dir_dataset = "dataset_ny_taxi"
     regressor_type = "linear"
+    mlflow_tracking_uri = "sqlite:///mlruns.db"
+    experiment_name = "ny_taxi"
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -82,6 +92,18 @@ def main() -> None:
         type=str,
         choices=["linear", "ridge", "xgboost"],
         help="type of the regressor model to be used for the model pipeline",
+    )
+    parser.add_argument(
+        "--mlflow_tracking_uri",
+        default=mlflow_tracking_uri,
+        type=str,
+        help="mlflow tracking uri",
+    )
+    parser.add_argument(
+        "--experiment_name",
+        default=experiment_name,
+        type=str,
+        help="mlflow experiment name",
     )
     ARGS, unparsed = parser.parse_known_args()
     trainer(ARGS)

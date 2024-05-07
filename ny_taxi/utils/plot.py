@@ -46,6 +46,7 @@ def create_bar_chart(
     data: np.ndarray,
     labels: List[str],
     plot_title: str,
+    x_label: str,
 ) -> Figure:
     colors = sns.color_palette("pastel")[: len(data)]
     fig = plt.figure(figsize=(6, 6))
@@ -53,5 +54,7 @@ def create_bar_chart(
     plt.title(plot_title)
     plt.grid()
     plt.bar(x_labels, data, label=labels, color=colors)
+    plt.ylabel("Counts")
+    plt.xlabel(f"{x_label}")
     plt.xticks(x_labels, labels, rotation="vertical")
     return fig

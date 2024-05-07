@@ -9,7 +9,10 @@ from ny_taxi.utils.production import list_experiments, list_registered_models
 
 def production(ARGS: argparse.Namespace) -> None:
     logging.basicConfig(level=logging.INFO)
-    config_production = ProductionConfig(mlflow_tracking_uri=ARGS.mlflow_tracking_uri, experiment_name=ARGS.experiment_name)
+    config_production = ProductionConfig(
+        mlflow_tracking_uri=ARGS.mlflow_tracking_uri,
+        experiment_name=ARGS.experiment_name,
+    )
     list_experiments(config_production)
     list_registered_models(config_production)
     return

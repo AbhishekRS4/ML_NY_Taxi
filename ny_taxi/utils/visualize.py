@@ -32,13 +32,13 @@ def visualize() -> None:
         .rename_axis("VendorID")
         .reset_index(name="counts")
     )
-    fig_1 = create_pie_chart(
+    fig_vendors = create_pie_chart(
         df_counts_vendor_ids.counts.to_numpy(),
         df_counts_vendor_ids.VendorID.to_list(),
         f"Distribution of Vendors for taxi:{taxi_type} trips, year:{year}, month:{month}",
         "Vendor",
     )
-    st.pyplot(fig_1)
+    st.pyplot(fig_vendors)
     st.write(df_counts_vendor_ids)
 
     df_counts_payment_type = (
@@ -46,13 +46,13 @@ def visualize() -> None:
         .rename_axis("payment_type")
         .reset_index(name="counts")
     )
-    fig_2 = create_pie_chart(
+    fig_payment_type = create_pie_chart(
         df_counts_payment_type.counts.to_numpy(),
         df_counts_payment_type.payment_type.astype(np.int32).to_list(),
         f"Distribution of Payment type for taxi:{taxi_type} trips, year:{year}, month:{month}",
         "Payment_Type",
     )
-    st.pyplot(fig_2)
+    st.pyplot(fig_payment_type)
     st.write(df_counts_payment_type)
 
     df_counts_trip_type = (
@@ -60,14 +60,28 @@ def visualize() -> None:
         .rename_axis("trip_type")
         .reset_index(name="counts")
     )
-    fig_3 = create_pie_chart(
+    fig_trip_type = create_pie_chart(
         df_counts_trip_type.counts.to_numpy(),
         df_counts_trip_type.trip_type.astype(np.int32).to_list(),
         f"Distribution of Trip type for taxi:{taxi_type} trips, year:{year}, month:{month}",
         "Trip_Type",
     )
-    st.pyplot(fig_3)
+    st.pyplot(fig_trip_type)
     st.write(df_counts_trip_type)
+
+    df_counts_passenger_count = (
+        df_ny_taxi.value_counts("passenger_count", sort=True)
+        .rename_axis("passenger_count")
+        .reset_index(name="counts")
+    )
+    fig_passenger_count = create_pie_chart(
+        df_counts_passenger_count.counts.to_numpy(),
+        df_counts_passenger_count.passenger_count.astype(np.int32).to_list(),
+        f"Distribution of Passenger counts for taxi:{taxi_type} trips, year:{year}, month:{month}",
+        "Passenger_Counts",
+    )
+    st.pyplot(fig_passenger_count)
+    st.write(df_counts_passenger_count)
 
     num_locs_min = 5
     num_locs_max = 100
@@ -82,12 +96,13 @@ def visualize() -> None:
         .rename_axis("PULocationID")
         .reset_index(name="counts")
     )
-    fig_4 = create_bar_chart(
+    fig_PU_loc = create_bar_chart(
         df_counts_PU_location.counts.to_numpy()[:top_N_locations],
         df_counts_PU_location.PULocationID.astype(np.int32).to_list()[:top_N_locations],
         f"Top {top_N_locations} Pickup locations for taxi:{taxi_type} trips, year:{year}, month:{month}",
+        "Pickup Location ID",
     )
-    st.pyplot(fig_4)
+    st.pyplot(fig_PU_loc)
     st.write(df_counts_PU_location)
 
     df_counts_DO_location = (
@@ -95,26 +110,13 @@ def visualize() -> None:
         .rename_axis("DOLocationID")
         .reset_index(name="counts")
     )
-    fig_5 = create_bar_chart(
+    fig_DO_loc = create_bar_chart(
         df_counts_DO_location.counts.to_numpy()[:top_N_locations],
         df_counts_DO_location.DOLocationID.astype(np.int32).to_list()[:top_N_locations],
         f"Top {top_N_locations} Dropoff locations for taxi:{taxi_type} trips, year:{year}, month:{month}",
+        "Dropoff Location ID",
     )
-    st.pyplot(fig_5)
+    st.pyplot(fig_DO_loc)
     st.write(df_counts_DO_location)
-
-    df_counts_passenger_count = (
-        df_ny_taxi.value_counts("passenger_count", sort=True)
-        .rename_axis("passenger_count")
-        .reset_index(name="counts")
-    )
-    fig_6 = create_pie_chart(
-        df_counts_passenger_count.counts.to_numpy(),
-        df_counts_passenger_count.passenger_count.astype(np.int32).to_list(),
-        f"Distribution of Passenger counts for taxi:{taxi_type} trips, year:{year}, month:{month}",
-        "Passenger_Counts",
-    )
-    st.pyplot(fig_6)
-    st.write(df_counts_passenger_count)
 
     return

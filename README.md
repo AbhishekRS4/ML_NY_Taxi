@@ -13,4 +13,5 @@ mlflow ui --backend-store-uri sqlite:///mlruns.db
 ```
 
 
-## 
+## AWS Instructions
+* Running code to use the AWS infrastructure, refer [AWS.md](AWS.md)

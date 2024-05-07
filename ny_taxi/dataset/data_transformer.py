@@ -28,5 +28,5 @@ def transform(df_ny_taxi: pd.DataFrame) -> pd.DataFrame:
 
     config_feature_target = FeatureTargetConfig()
     categorical = config_feature_target.categorical
-    df_ny_taxi[categorical] = df_ny_taxi[categorical].astype(np.int32).astype(str)
+    df_ny_taxi[categorical] = df_ny_taxi[categorical].astype(str)
     return df_ny_taxi

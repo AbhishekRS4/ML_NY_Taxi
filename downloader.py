@@ -1,9 +1,8 @@
 import os
 import argparse
 
-from ny_taxi.data_downloader.download import download
 from ny_taxi.config.config import DataDownloaderConfig
-
+from ny_taxi.data_downloader.download import downloader
 
 def main() -> None:
     year = 2021
@@ -36,7 +35,7 @@ def main() -> None:
         year=ARGS.year,
         taxi_type=ARGS.taxi_type,
     )
-    download(config_downloader)
+    downloader(config_downloader)
 
     return
 

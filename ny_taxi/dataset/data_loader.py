@@ -2,11 +2,14 @@ import os
 import numpy as np
 import pandas as pd
 
+from typing import Tuple
+from prefect import task, get_run_logger
 
 from ny_taxi.config.config import DataLoaderConfig
 
 
-def data_loader(config_dataloader: DataLoaderConfig) -> pd.DataFrame:
+@task(retries=3, retry_delay_seconds=2)
+def data_loader(config_dataloader: DataLoaderConfig) -> Tuple[pd.DataFrame, DataLoaderConfig]:
     dir_dataset = os.path.join(
         config_dataloader.dir_dataset,
         config_dataloader.taxi_type,
@@ -37,4 +40,4 @@ def data_loader(config_dataloader: DataLoaderConfig) -> pd.DataFrame:
             all_files = file_parq
 
     config_dataloader.all_files = all_files
-    return df
+    return df, config_dataloader

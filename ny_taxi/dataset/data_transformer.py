@@ -2,9 +2,12 @@ import os
 import numpy as np
 import pandas as pd
 
+from prefect import task
+
 from ny_taxi.config.config import FeatureTargetConfig
 
 
+@task()
 def transform(df_ny_taxi: pd.DataFrame) -> pd.DataFrame:
     # add a new feature duration = dropoff time - pickup time
     df_ny_taxi["duration"] = (

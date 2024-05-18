@@ -4,10 +4,14 @@ import argparse
 import numpy as np
 
 
+from prefect import flow
+
+
 from ny_taxi.trainer.train import train_pipeline
 from ny_taxi.config.config import DataLoaderConfig, PipelineConfig, TrainerConfig
 
 
+@flow(validate_parameters=False)
 def trainer(ARGS: argparse.Namespace) -> None:
     logging.basicConfig(level=logging.INFO)
 

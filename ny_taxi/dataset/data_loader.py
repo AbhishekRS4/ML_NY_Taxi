@@ -42,4 +42,5 @@ def data_loader(
             all_files = file_parq
 
     config_dataloader.all_files = all_files
+    # return config_dataloader since it has been updated when using prefect worlflows
     return df, config_dataloader

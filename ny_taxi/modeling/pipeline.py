@@ -51,7 +51,9 @@ def get_pipeline(config_pipeline: PipelineConfig) -> Tuple[Pipeline, dict]:
 
 
 @task()
-def do_grid_search(pipeline: Pipeline, pipeline_params: dict, X_train_dicts: list, Y_train: np.ndarray) -> GridSearchCV:
+def do_grid_search(
+    pipeline: Pipeline, pipeline_params: dict, X_train_dicts: list, Y_train: np.ndarray
+) -> GridSearchCV:
     # setup grid search with k-fold cross validation
     k_fold_cv = KFold(n_splits=5, shuffle=True, random_state=7)
     grid_cv = GridSearchCV(

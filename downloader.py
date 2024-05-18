@@ -4,6 +4,7 @@ import argparse
 from ny_taxi.config.config import DataDownloaderConfig
 from ny_taxi.data_downloader.download import downloader
 
+
 def main() -> None:
     year = 2021
     taxi_type = "green"

@@ -19,7 +19,17 @@ from ny_taxi.config.config import (
 
 
 @task(retries=3, retry_delay_seconds=2)
-def log_model_metrics(config_trainer: TrainerConfig, config_train_loader: DataLoaderConfig, config_test_loader: DataLoaderConfig, config_pipeline: PipelineConfig, grid_cv: GridSearchCV, train_rmse: float, train_r2: float, test_rmse: float, test_r2: float) -> None:
+def log_model_metrics(
+    config_trainer: TrainerConfig,
+    config_train_loader: DataLoaderConfig,
+    config_test_loader: DataLoaderConfig,
+    config_pipeline: PipelineConfig,
+    grid_cv: GridSearchCV,
+    train_rmse: float,
+    train_r2: float,
+    test_rmse: float,
+    test_r2: float,
+) -> None:
     logger = get_run_logger()
     # get the cross validation score and the params for the best estimator
     grid_cv_best_estimator = grid_cv.best_estimator_
@@ -108,6 +118,16 @@ def train_pipeline(
     logger.info(f"test_rmse: {test_rmse:.4f}, test_r2: {test_r2:.4f}")
 
     # log the best model from grid search cross validation and the metrics
-    log_model_metrics(config_trainer, config_train_loader, config_test_loader, config_pipeline, grid_cv, train_rmse, train_r2, test_rmse, test_r2)
+    log_model_metrics(
+        config_trainer,
+        config_train_loader,
+        config_test_loader,
+        config_pipeline,
+        grid_cv,
+        train_rmse,
+        train_r2,
+        test_rmse,
+        test_r2,
+    )
 
     return

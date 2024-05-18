@@ -9,7 +9,9 @@ from ny_taxi.config.config import DataLoaderConfig
 
 
 @task(retries=3, retry_delay_seconds=2)
-def data_loader(config_dataloader: DataLoaderConfig) -> Tuple[pd.DataFrame, DataLoaderConfig]:
+def data_loader(
+    config_dataloader: DataLoaderConfig,
+) -> Tuple[pd.DataFrame, DataLoaderConfig]:
     dir_dataset = os.path.join(
         config_dataloader.dir_dataset,
         config_dataloader.taxi_type,

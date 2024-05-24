@@ -103,7 +103,9 @@ def train_pipeline(
 
     # do grid search
     # NOTE: use quote(param) for large params or data
-    grid_cv = do_grid_search(pipeline, pipeline_params, quote(X_train_dicts), quote(Y_train))
+    grid_cv = do_grid_search(
+        pipeline, pipeline_params, quote(X_train_dicts), quote(Y_train)
+    )
 
     grid_cv_best_estimator = grid_cv.best_estimator_
     logger.info(f"best estimator: {grid_cv_best_estimator}")

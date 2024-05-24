@@ -1,40 +1,21 @@
 import os
-import argparse
+import toml
 
 from ny_taxi.config.config import DataDownloaderConfig
 from ny_taxi.data_downloader.download import downloader
 
 
 def main() -> None:
-    year = 2021
-    taxi_type = "green"
-    dir_dataset = "dataset_ny_taxi"
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    parser.add_argument(
-        "--year",
-        default=year,
-        type=int,
-        help="year of the dataset to be downloaded",
-    )
-    parser.add_argument(
-        "--taxi_type",
-        default=taxi_type,
-        type=str,
-        help="taxi type of the dataset to be downloaded",
-    )
-    parser.add_argument(
-        "--dir_dataset",
-        default=dir_dataset,
-        type=str,
-        help="dir where the dataset needs to be downloaded",
-    )
-    ARGS, unparsed = parser.parse_known_args()
+    file_toml = "config.toml"
+    config = toml.load(file_toml)
+    year = config["downloader"]["year"]
+    taxi_type = config["downloader"]["taxi_type"]
+    dir_dataset = config["downloader"]["dir_dataset"]
+
     config_downloader = DataDownloaderConfig(
-        dir_dataset=os.path.join(ARGS.dir_dataset, ARGS.taxi_type, str(ARGS.year)),
-        year=ARGS.year,
-        taxi_type=ARGS.taxi_type,
+        dir_dataset=os.path.join(dir_dataset, taxi_type, str(year)),
+        year=year,
+        taxi_type=taxi_type,
     )
     downloader(config_downloader)
 

@@ -9,7 +9,9 @@ from ny_taxi.config.config import DataLoaderConfig
 
 
 @task(retries=3, retry_delay_seconds=2)
-def data_loader(config_dataloader: DataLoaderConfig) -> Tuple[pd.DataFrame, DataLoaderConfig]:
+def data_loader(
+    config_dataloader: DataLoaderConfig,
+) -> Tuple[pd.DataFrame, DataLoaderConfig]:
     dir_dataset = os.path.join(
         config_dataloader.dir_dataset,
         config_dataloader.taxi_type,
@@ -40,4 +42,5 @@ def data_loader(config_dataloader: DataLoaderConfig) -> Tuple[pd.DataFrame, Data
             all_files = file_parq
 
     config_dataloader.all_files = all_files
+    # return config_dataloader since it has been updated when using prefect worlflows
     return df, config_dataloader

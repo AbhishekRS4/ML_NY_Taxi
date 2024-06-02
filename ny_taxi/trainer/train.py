@@ -2,7 +2,10 @@ import os
 import mlflow
 import numpy as np
 
+from datetime import date
 from prefect import flow, task, get_run_logger
+from prefect.utilities.annotations import quote
+from prefect.artifacts import create_markdown_artifact
 from sklearn.model_selection import GridSearchCV
 
 
@@ -19,7 +22,17 @@ from ny_taxi.config.config import (
 
 
 @task(retries=3, retry_delay_seconds=2)
-def log_model_metrics(config_trainer: TrainerConfig, config_train_loader: DataLoaderConfig, config_test_loader: DataLoaderConfig, config_pipeline: PipelineConfig, grid_cv: GridSearchCV, train_rmse: float, train_r2: float, test_rmse: float, test_r2: float) -> None:
+def log_model_metrics(
+    config_trainer: TrainerConfig,
+    config_train_loader: DataLoaderConfig,
+    config_test_loader: DataLoaderConfig,
+    config_pipeline: PipelineConfig,
+    grid_cv: GridSearchCV,
+    train_rmse: float,
+    train_r2: float,
+    test_rmse: float,
+    test_r2: float,
+) -> None:
     logger = get_run_logger()
     # get the cross validation score and the params for the best estimator
     grid_cv_best_estimator = grid_cv.best_estimator_
@@ -50,6 +63,24 @@ def log_model_metrics(config_trainer: TrainerConfig, config_train_loader: DataLo
         mlflow.log_metric("test_r2", test_r2)
     # end mlflow logging
     mlflow.end_run()
+
+    markdown__rmse_report = f"""# RMSE Report
+
+        ## Summary
+
+        NY Taxi Duration Prediction 
+
+        ## RMSE {config_pipeline.regressor_type} Model
+
+        | Region    | train RMSE | test RMSE | 
+        |:----------|-----------:|----------:|
+        | {date.today()} | {train_rmse:.4f} | | {test_rmse:.4f} | 
+    """
+
+    create_markdown_artifact(
+        key="duration-model-report", markdown=markdown__rmse_report
+    )
+
     logger.info("completed mlflow logging for the best estimator")
     return
 
@@ -91,7 +122,10 @@ def train_pipeline(
     pipeline, pipeline_params = get_pipeline(config_pipeline)
 
     # do grid search
-    grid_cv = do_grid_search(pipeline, pipeline_params, X_train_dicts, Y_train)
+    # NOTE: use quote(param) for large params or data
+    grid_cv = do_grid_search(
+        pipeline, pipeline_params, quote(X_train_dicts), quote(Y_train)
+    )
 
     grid_cv_best_estimator = grid_cv.best_estimator_
     logger.info(f"best estimator: {grid_cv_best_estimator}")
@@ -108,6 +142,16 @@ def train_pipeline(
     logger.info(f"test_rmse: {test_rmse:.4f}, test_r2: {test_r2:.4f}")
 
     # log the best model from grid search cross validation and the metrics
-    log_model_metrics(config_trainer, config_train_loader, config_test_loader, config_pipeline, grid_cv, train_rmse, train_r2, test_rmse, test_r2)
+    log_model_metrics(
+        config_trainer,
+        config_train_loader,
+        config_test_loader,
+        config_pipeline,
+        grid_cv,
+        train_rmse,
+        train_r2,
+        test_rmse,
+        test_r2,
+    )
 
     return

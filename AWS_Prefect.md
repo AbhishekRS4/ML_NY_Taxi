@@ -35,3 +35,8 @@ prefect deployment run 'trainer/ml-ny-taxi-dep'
 ```
 prefect worker start --pool 'ml-ny-taxi'
 ```
+* In [prefect.yaml](prefect.yaml) there can be multiple deployments, running locally, running by connecting to S3 etc.
+To deploy all deployments, the following command can be used
+```
+prefect deploy --all
+```

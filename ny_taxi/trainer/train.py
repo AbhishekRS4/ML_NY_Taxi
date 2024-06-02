@@ -2,8 +2,10 @@ import os
 import mlflow
 import numpy as np
 
+from datetime import date
 from prefect import flow, task, get_run_logger
 from prefect.utilities.annotations import quote
+from prefect.artifacts import create_markdown_artifact
 from sklearn.model_selection import GridSearchCV
 
 
@@ -61,6 +63,24 @@ def log_model_metrics(
         mlflow.log_metric("test_r2", test_r2)
     # end mlflow logging
     mlflow.end_run()
+
+    markdown__rmse_report = f"""# RMSE Report
+
+        ## Summary
+
+        NY Taxi Duration Prediction 
+
+        ## RMSE {config_pipeline.regressor_type} Model
+
+        | Region    | train RMSE | test RMSE | 
+        |:----------|-----------:|----------:|
+        | {date.today()} | {train_rmse:.4f} | | {test_rmse:.4f} | 
+    """
+
+    create_markdown_artifact(
+        key="duration-model-report", markdown=markdown__rmse_report
+    )
+
     logger.info("completed mlflow logging for the best estimator")
     return
 

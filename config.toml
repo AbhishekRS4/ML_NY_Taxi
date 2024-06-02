@@ -10,6 +10,8 @@ test_year = 2024
 taxi_type = "green"
 dir_dataset = "dataset_ny_taxi"
 regressor_type = "linear"
+# for local
 mlflow_tracking_uri = "sqlite:///mlruns.db"
-# for AWS mlflow_tracking_uri = http://PUBLIC_DNS:5000
+# for AWS
+# mlflow_tracking_uri = http://PUBLIC_DNS:5000
 experiment_name = "ny_taxi"

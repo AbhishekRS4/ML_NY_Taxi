@@ -12,6 +12,6 @@ dir_dataset = "dataset_ny_taxi"
 regressor_type = "linear"
 # for local
 mlflow_tracking_uri = "sqlite:///mlruns.db"
-# for AWS, replace PUBLIC_DNS in the below link
-# mlflow_tracking_uri = http://PUBLIC_DNS:5000
+# for AWS, replace PUBLIC_DNS in the below tracking uri
+# mlflow_tracking_uri = "http://PUBLIC_DNS:5000"
 experiment_name = "ny_taxi"

@@ -6,7 +6,7 @@
 * The dataset can be found in [NY_Taxi_Dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 
 
-## MLFlow tracking
+## MLFlow tracking UI locally
 * To visualize using MLFlow UI, run the following command
 ```
 mlflow ui --backend-store-uri sqlite:///mlruns.db

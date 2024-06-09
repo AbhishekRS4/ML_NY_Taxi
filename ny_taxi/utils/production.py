@@ -29,7 +29,7 @@ def list_experiments(config_production: ProductionConfig) -> None:
 def list_registered_models(config_production: ProductionConfig) -> None:
     client = MlflowClient(tracking_uri=config_production.mlflow_tracking_uri)
     logging.info("All the latest versions of the registered models")
-    latest_versions = client.get_latest_versions(name="ny_taxi_duration_regressor")
+    latest_versions = client.get_latest_versions(name=config_production.experiment_name)
     for version in latest_versions:
         logging.info(
             f"version: {version.version}, tags: {version.tags}, run_id: {version.run_id}"

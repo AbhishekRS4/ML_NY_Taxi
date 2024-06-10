@@ -1,3 +1,4 @@
 __pycache__
 dataset_ny_taxi
 mlruns*
+model_for_prod

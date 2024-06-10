@@ -11,12 +11,18 @@ from ny_taxi.utils.production import get_latest_registered_model
 
 
 logging.basicConfig(level=logging.INFO)
+
+"""
 mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
 config_production = ProductionConfig(mlflow_tracking_uri=mlflow_tracking_uri)
 logging.info(f"config_production: {config_production}")
 mlflow.set_tracking_uri(config_production.mlflow_tracking_uri)
 model_name, model_run_id, model_version = get_latest_registered_model(config_production)
 model = mlflow.sklearn.load_model(f"models:/{model_name}/{model_version}")
+"""
+
+model = mlflow.sklearn.load_model("./model_for_prod/")
+# model_run_id = "temp"
 app = Flask(__name__)
 
 
@@ -42,7 +48,10 @@ def predict_endpoint() -> Response:
     logging.info(f"Ride features: {features}")
     pred = get_prediction(features)
 
-    dict_pred = {"duration": pred, "model_version": model_run_id}
+    dict_pred = {
+        "duration": pred,
+        # 'model_version': model_run_id
+    }
     logging.info(f"Response json: {dict_pred}")
 
     try:

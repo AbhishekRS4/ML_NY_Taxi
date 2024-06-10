@@ -1,5 +1,6 @@
 import os
 import mlflow
+import shutil
 import logging
 
 from typing import Tuple
@@ -48,4 +49,7 @@ def get_latest_registered_model(
     model_run_id = latest_versions[-1].run_id
     model_name = latest_versions[-1].name
     model_version = latest_versions[-1].version
+    list_files_for_prod = os.listdir(latest_versions[-1].source)
+    for _file in list_files_for_prod:
+        shutil.copy2(os.path.join(latest_versions[-1].source, _file), "model_for_prod")
     return model_name, model_run_id, model_version

@@ -17,7 +17,7 @@ mlflow ui --backend-store-uri sqlite:///mlruns.db
 * For training to use the MLFlow server on the AWS infrastructure and Prefect workpools, refer [AWS_Prefect.md](AWS_Prefect.md)
 
 
-## For running the Flask app
+## For running the Flask app outside docker container
 * For running the Flask app locally, set the environment variable using the following command
 ```
 export MLFLOW_TRACKING_URI=sqlite:///mlruns.db

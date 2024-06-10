@@ -13,5 +13,17 @@ mlflow ui --backend-store-uri sqlite:///mlruns.db
 ```
 
 
-## AWS Instructions
-* Running code to use the AWS infrastructure, refer [AWS.md](AWS.md)
+## For training using AWS and Prefect
+* For training to use the MLFlow server on the AWS infrastructure and Prefect workpools, refer [AWS_Prefect.md](AWS_Prefect.md)
+
+
+## For running the Flask app
+* For running the Flask app locally, set the environment variable using the following command
+```
+export MLFLOW_TRACKING_URI=sqlite:///mlruns.db
+```
+* Use the following command to run the Flask app
+```
+gunicorn --bind 0.0.0.0:7860 web_service_app:app
+```
+* For testing the POST request to the web\_service\_app, run the [test\_web\_service.py](test_web_service.py)

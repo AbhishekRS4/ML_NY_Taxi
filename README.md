@@ -18,7 +18,7 @@ mlflow ui --backend-store-uri sqlite:///mlruns.db
 
 
 ## For running the Flask app outside docker container
-* For running the Flask app locally, set the environment variable using the following command
+* For running the Flask app locally, set the environment variable using the following command with the correct value for tracking URI
 ```
 export MLFLOW_TRACKING_URI=sqlite:///mlruns.db
 ```

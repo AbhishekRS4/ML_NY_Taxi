@@ -4,7 +4,11 @@ import argparse
 
 
 from ny_taxi.config.config import ProductionConfig
-from ny_taxi.utils.production import list_experiments, list_registered_models
+from ny_taxi.utils.production import (
+    list_experiments,
+    list_registered_models,
+    get_latest_registered_model,
+)
 
 
 def production(ARGS: argparse.Namespace) -> None:
@@ -13,8 +17,14 @@ def production(ARGS: argparse.Namespace) -> None:
         mlflow_tracking_uri=ARGS.mlflow_tracking_uri,
         experiment_name=ARGS.experiment_name,
     )
-    list_experiments(config_production)
-    list_registered_models(config_production)
+    # list_experiments(config_production)
+    # list_registered_models(config_production)
+    model_name, model_run_id, model_version = get_latest_registered_model(
+        config_production
+    )
+    logging.info(
+        f"model_name: {model_name}, model_run_id: {model_run_id}, model_version: {model_version}"
+    )
     return
 
 

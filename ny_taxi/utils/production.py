@@ -2,8 +2,9 @@ import os
 import mlflow
 import logging
 
-from mlflow.client import MlflowClient
+from typing import Tuple
 from mlflow.entities import ViewType
+from mlflow.client import MlflowClient
 
 
 from ny_taxi.config.config import ProductionConfig
@@ -32,6 +33,19 @@ def list_registered_models(config_production: ProductionConfig) -> None:
     latest_versions = client.get_latest_versions(name=config_production.experiment_name)
     for version in latest_versions:
         logging.info(
-            f"version: {version.version}, tags: {version.tags}, run_id: {version.run_id}"
+            f"name: {version.name}, version: {version.version}, tags: {version.tags}, run_id: {version.run_id}"
         )
     return
+
+
+def get_latest_registered_model(
+    config_production: ProductionConfig,
+) -> Tuple[str, str, int]:
+    client = MlflowClient(tracking_uri=config_production.mlflow_tracking_uri)
+    logging.info("All the latest versions of the registered models")
+    latest_versions = client.get_latest_versions(name=config_production.experiment_name)
+    logging.info(latest_versions[-1])
+    model_run_id = latest_versions[-1].run_id
+    model_name = latest_versions[-1].name
+    model_version = latest_versions[-1].version
+    return model_name, model_run_id, model_version

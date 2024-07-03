@@ -16,9 +16,10 @@ COPY ./requirements_dep.txt .
 
 RUN pip install --no-cache-dir -r requirements_dep.txt
 
-COPY ./ny_taxi/ ./ny_taxi/
 COPY ./model_for_prod/ ./model_for_prod/
 COPY ./web_service_app.py .
+
+ENV MLFLOW_MODEL_RUN_ID=8ea4b231f2f04a80a8d0105ab82afb15
 
 EXPOSE 7860
 

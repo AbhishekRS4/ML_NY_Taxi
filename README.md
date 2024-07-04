@@ -17,24 +17,11 @@ mlflow ui --backend-store-uri sqlite:///mlruns.db
 * For training to use the MLFlow server on the AWS infrastructure and Prefect workpools, refer [AWS_Prefect.md](AWS_Prefect.md)
 
 
-## For running the Flask app outside docker container
-* For running the Flask app locally, set the environment variable using the following command with the correct value for tracking URI
-```
-export MLFLOW_TRACKING_URI=sqlite:///mlruns.db
-```
-* Use the following command to run the Flask app
-```
-gunicorn --bind 0.0.0.0:7860 web_service_app:app
-```
-* For testing the POST request to the web\_service\_app, run the [test\_web\_service.py](test_web_service.py)
+## Flask web service app
+* The flask web service app scripts can be found in [flask_web_service](flask_web_service)
+* The instructions for running the flask web service app can be found in [flask_web_service/README.md](flask_web_service/README.md)
 
 
-## For running the Flask app in a docker container
-* To build the docker container, run the following command
-```
-docker build -t flask_ny_taxi .
-```
-* To run the app, use the following command
-```
-docker run -p 7860:7860 -t flask_ny_taxi
-```
+## For deploying the AWS Lambda function to AWS and creating an API endpoint
+* The AWS lambda function can be found in [aws_lambda_func](aws_lambda_func)
+* The instructions for running the AWS lambda function can be found in [aws_lambda_func/README.md](aws_lambda_func/README.md)

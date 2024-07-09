@@ -1,6 +1,6 @@
 # Machine Learning with New York Taxi data
 
-[![Python project test with Github Actions](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml/badge.svg)](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml)
+[![Python application test with Github Actions](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml/badge.svg)](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml)
 
 
 ## Info

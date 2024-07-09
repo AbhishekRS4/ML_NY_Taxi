@@ -1,5 +1,8 @@
 # Machine Learning with New York Taxi data
 
+[![Python project test with Github Actions](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml/badge.svg)](https://github.com/abhishekrs4/ML_NY_Taxi/actions/workflows/main.yml)
+
+
 ## Info
 * This is a ML and MLOps project with real-world taxi data
 * The following page contains info regarding the [NY_Taxi_Dataset_Info](https://www.nyc.gov/site/tlc/passengers/your-ride.page)

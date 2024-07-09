@@ -1,10 +1,16 @@
+import pytest
+
 from web_service_app import prepare_features
 
 
-def test_prepare_features(tmpdir) -> None:
+@pytest.fixture()
+def setup_temp_dir(tmpdir):
     # create a temp dir for model
-    tmpdir.mkdir("model_for_prod")
+    tmpdir.mkdir("./model_for_prod")
+    return
 
+
+def test_prepare_features(setup_temp_dir) -> None:
     ride = {
         "PULocationID": 25,
         "DOLocationID": 30,

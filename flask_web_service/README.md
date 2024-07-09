@@ -11,7 +11,7 @@ export MLFLOW_TRACKING_URI=sqlite:///mlruns.db
 cd flask_web_service
 gunicorn --bind 0.0.0.0:7860 web_service_app:app
 ```
-* For testing the POST request to the flask web service application [web_service_app.py](web_service_app.py), run the test web service script [test_web_service.py](test_web_service.py)
+* For testing the POST request to the flask web service application [web_service_app.py](web_service_app.py), run the post request to web service script [post_req_web_service.py](post_req_web_service.py)
 
 
 ## For running the Flask app in a docker container

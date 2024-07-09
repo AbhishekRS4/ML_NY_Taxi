@@ -24,3 +24,9 @@ docker build -t flask_ny_taxi .
 ```
 docker run -p 7860:7860 -t flask_ny_taxi
 ```
+
+## Running test cases manually
+* To run the test cases with a detailed test results for the web service app manually, run the following command
+```
+pytest -vv
+```

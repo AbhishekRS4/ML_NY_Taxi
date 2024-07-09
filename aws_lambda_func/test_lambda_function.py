@@ -3,14 +3,7 @@ import pytest
 from lambda_function import prepare_features
 
 
-@pytest.fixture()
-def setup_temp_dir(tmpdir):
-    # create a temp dir for model
-    tmpdir.mkdir("./model_for_prod")
-    return
-
-
-def test_prepare_features(setup_temp_dir) -> None:
+def test_prepare_features():
     ride = {
         "PULocationID": 25,
         "DOLocationID": 30,

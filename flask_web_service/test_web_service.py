@@ -10,7 +10,7 @@ def test_prepare_features():
         "trip_distance": 40,
     }
     ride_features = prepare_features(ride)
-    
+
     # expected features
     expected_ride_features = {
         "PU_DO": "25_30",

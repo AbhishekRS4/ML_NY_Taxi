@@ -53,12 +53,9 @@ def lambda_handler(event: dict, context) -> dict:
 
         # create a prediction event
         prediction_event = {
-            "model": 'ny_taxi_ride_duration_prediction_model',
+            "model": "ny_taxi_ride_duration_prediction_model",
             "version": MLFLOW_RUN_ID,
-            "prediction": {
-                "ride_duration": prediction,
-                "ride_id": ride_id   
-            }
+            "prediction": {"ride_duration": prediction, "ride_id": ride_id},
         }
 
         # publish the prediction to the stream
@@ -66,13 +63,11 @@ def lambda_handler(event: dict, context) -> dict:
             kinesis_client.put_record(
                 StreamName=PRED_STREAM_NAME,
                 Data=json.dumps(prediction_event),
-                PartitionKey=str(ride_id)
+                PartitionKey=str(ride_id),
             )
-        
+
         # add the prediction event to a list of prediction events
         prediction_events.append(prediction_event)
 
-    dict_pred = {
-        "prediction": prediction_events
-    }    
+    dict_pred = {"prediction": prediction_events}
     return dict_pred
